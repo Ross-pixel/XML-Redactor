@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>XML-based Website Builder</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <header>
+      <h1>XML-based Website Builder</h1>
+    </header>
+
+    <main>
+      <section>
+        <h2>Create a New Website</h2>
+        <p>Upload your XML file to create a new website layout.</p>
+        <input type="file" id="xmlFileInput" />
+        <button onclick="loadXml()">Load XML</button>
+      </section>
+
+      <section>
+        <h2>Edit Website Content</h2>
+        <p>Edit the website content below:</p>
+        <textarea id="xmlEditor" rows="10"></textarea>
+        <button onclick="saveXml()">Save XML</button>
+      </section>
+
+      <section>
+        <h2>Preview</h2>
+        <div id="preview"></div>
+      </section>
+    </main>
+
+    <footer>
+      <p>&copy; 2023 Your Company Name</p>
+    </footer>
+
+    <script src="js/script.js"></script>
+  </body>
+</html>
