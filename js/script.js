@@ -82,6 +82,17 @@ function createPreviewElements(container, element) {
 
   elementPreview.appendChild(addButton);
   elementPreview.appendChild(deleteButton);
+
+  elementPreview.addEventListener("click", function () {
+    Array.from(elementPreview.children).forEach((el) => {
+      if (el.style.display === "none") {
+        el.style.display = "inline";
+      } else {
+        el.style.display = "none";
+      }
+    });
+  });
+
   container.appendChild(elementPreview);
 
   for (let i = 0; i < element.children.length; i++) {
@@ -89,10 +100,8 @@ function createPreviewElements(container, element) {
   }
 }
 
-function hideElement(element) {
-  for (let i = 0; i < element.children.length; i++) {
-    element.children[i].classList.add("hide");
-  }
+function hideChildren(element) {
+  console.log("click", element);
 }
 
 // Слушатели событий
