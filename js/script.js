@@ -56,7 +56,28 @@ function previewXml() {
 function createPreviewElements(container, element) {
   const elementPreview = document.createElement("div");
   elementPreview.className = "xml-element";
-  elementPreview.textContent = `<${element.nodeName}>`;
+
+  //Create nametag
+  const xmlName = document.createElement("a");
+  xmlName.className = "xml-label";
+  xmlName.textContent = `<${element.nodeName}>`;
+  //Add hide children by click
+  xmlName.addEventListener("click", function () {
+    Array.from(elementPreview.children).forEach((el) => {
+      if (el.classList.contains("xml-label")) {
+      } else {
+        if (el.style.display === "none") {
+          if (el.tagName === "BUTTON") {
+            el.style.display = "inline";
+          } else {
+            el.style.display = "block";
+          }
+        } else {
+          el.style.display = "none";
+        }
+      }
+    });
+  });
 
   const addButton = document.createElement("button");
   addButton.textContent = "Add Child";
@@ -70,6 +91,7 @@ function createPreviewElements(container, element) {
     deleteXmlElement(element);
   });
 
+  elementPreview.appendChild(xmlName);
   elementPreview.appendChild(document.createElement("br"));
 
   if (element.children.length == 0) {
@@ -83,25 +105,11 @@ function createPreviewElements(container, element) {
   elementPreview.appendChild(addButton);
   elementPreview.appendChild(deleteButton);
 
-  elementPreview.addEventListener("click", function () {
-    Array.from(elementPreview.children).forEach((el) => {
-      if (el.style.display === "none") {
-        el.style.display = "inline";
-      } else {
-        el.style.display = "none";
-      }
-    });
-  });
-
   container.appendChild(elementPreview);
 
   for (let i = 0; i < element.children.length; i++) {
-    createPreviewElements(container, element.children[i]);
+    createPreviewElements(elementPreview, element.children[i]);
   }
-}
-
-function hideChildren(element) {
-  console.log("click", element);
 }
 
 // Слушатели событий
