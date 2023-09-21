@@ -5,6 +5,7 @@ function loadXml() {
 
   const file = xmlFileInput.files[0];
   const reader = new FileReader();
+  rowNum = 1;
 
   reader.onload = function (event) {
     xmlEditor.value = event.target.result;
@@ -33,6 +34,7 @@ function saveXml() {
 }
 
 let rowNum = 1;
+
 // Функция для предварительного просмотра XML содержимого
 function previewXml() {
   const xmlEditor = document.getElementById("xmlEditor");
@@ -56,7 +58,7 @@ function previewXml() {
         const textareaValue = textareaElement.value;
 
         // Получите атрибут данных data-row
-        const row = textareaElement.dataset.row;
+        let row = textareaElement.dataset.row;
 
         // Получите текущее значение xmlEditor
         const xmlEditorValue = xmlEditor.value;
@@ -73,7 +75,6 @@ function previewXml() {
           ) {
             rowCounter++;
           }
-          console.log(row, rowCounter);
           if (row == rowCounter) {
             opentag = xmlEditorLines[i].split(">")[0];
             closetag = xmlEditorLines[i].split("<")[2];
