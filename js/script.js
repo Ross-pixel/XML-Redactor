@@ -1,4 +1,4 @@
-// Функция для загрузки XML файла
+// Function to load an XML file
 function loadXml() {
   const xmlFileInput = document.getElementById("xmlFileInput");
   const xmlEditor = document.getElementById("xmlEditor");
@@ -15,11 +15,11 @@ function loadXml() {
   reader.readAsText(file);
 }
 
-// Функция для сохранения XML файла
+// Function to save an XML file
 function saveXml() {
   const xmlEditor = document.getElementById("xmlEditor");
 
-  // Получите содержимое редактора и сохраните его как XML файл
+  // Get the content of the editor and save it as an XML file
   const xmlData = xmlEditor.value;
   const blob = new Blob([xmlData], { type: "text/xml" });
   const url = window.URL.createObjectURL(blob);
@@ -35,7 +35,7 @@ function saveXml() {
 
 let rowNum = 1;
 
-// Функция для предварительного просмотра XML содержимого
+// Function to preview XML content
 function previewXml() {
   const xmlEditor = document.getElementById("xmlEditor");
   const preview = document.getElementById("preview");
@@ -43,27 +43,27 @@ function previewXml() {
   try {
     const parser = new DOMParser();
     const xmlDoc = parser.parseFromString(xmlEditor.value, "text/xml");
-    // Очистите предварительный просмотр перед обновлением
+    // Clear the preview before updating it
     preview.innerHTML = "";
-    // Создайте элементы предварительного просмотра на основе xmlDoc
+    // Create preview elements based on xmlDoc
     createPreviewElements(preview, xmlDoc.documentElement);
 
-    // Получите все элементы <textarea> внутри Preview
+    // Get all <textarea> elements inside Preview
     const textareaElements = preview.querySelectorAll("textarea");
 
-    // Добавьте слушатель события 'input' к каждому элементу <textarea>
+    // Add an 'input' event listener to each <textarea> element
     textareaElements.forEach((textareaElement) => {
       textareaElement.addEventListener("input", function () {
-        // Получите значение элемента <textarea>
+        // Get the value of the <textarea> element
         const textareaValue = textareaElement.value;
 
-        // Получите атрибут данных data-row
+        // Get the 'data-row' attribute
         let row = textareaElement.dataset.row;
 
-        // Получите текущее значение xmlEditor
+        // Get the current value of xmlEditor
         const xmlEditorValue = xmlEditor.value;
 
-        // Разделите xmlEditor на строки
+        // Split xmlEditor into lines
         let xmlEditorLines = xmlEditorValue.split("\n");
 
         let rowCounter = 0;
@@ -82,12 +82,12 @@ function previewXml() {
           }
         }
 
-        // Обновите xmlEditor с обновленными строками
+        // Update xmlEditor with the modified lines
         xmlEditor.value = xmlEditorLines.join("\n");
       });
     });
 
-    // Обновите содержимое <textarea>
+    // Update the content of <textarea>
     xmlEditor.value = new XMLSerializer().serializeToString(xmlDoc);
   } catch (error) {
     console.log(error);
@@ -95,10 +95,10 @@ function previewXml() {
   }
 }
 
-// Добавьте слушатель события 'input' для xmlEditor
+// Add an 'input' event listener for xmlEditor
 const xmlEditor = document.getElementById("xmlEditor");
 xmlEditor.addEventListener("input", function () {
-  // При изменении xmlEditor, вызывайте функцию previewXml() снова
+  // When xmlEditor changes, call previewXml() again
   previewXml();
 });
 
@@ -106,11 +106,11 @@ function createPreviewElements(container, element) {
   const elementPreview = document.createElement("div");
   elementPreview.className = "xml-element";
 
-  // Create nametag
+  // Create a name tag
   const xmlName = document.createElement("a");
   xmlName.className = "xml-label";
   xmlName.textContent = `<${element.nodeName}>`;
-  // Add hide children by click
+  // Add a click event to hide children
   xmlName.addEventListener("click", function () {
     Array.from(elementPreview.children).forEach((el) => {
       if (el.classList.contains("xml-label")) {
@@ -144,12 +144,12 @@ function createPreviewElements(container, element) {
   }
 }
 
-// Слушатели событий
+// Event listeners
 document.getElementById("xmlFileInput").addEventListener("change", loadXml);
 document.getElementById("xmlEditor").addEventListener("input", previewXml);
 document.getElementById("saveButton").addEventListener("click", saveXml);
 
-// Вызов функции предварительного просмотра при загрузке страницы
+// Call the previewXml() function when the page loads
 window.onload = function () {
   previewXml();
 };
