@@ -115,28 +115,12 @@ function createPreviewElements(container, element) {
       if (el.classList.contains("xml-label")) {
       } else {
         if (el.style.display === "none") {
-          if (el.tagName === "BUTTON") {
-            el.style.display = "inline";
-          } else {
-            el.style.display = "block";
-          }
+          el.style.display = "block";
         } else {
           el.style.display = "none";
         }
       }
     });
-  });
-
-  const addButton = document.createElement("button");
-  addButton.textContent = "Add Child";
-  addButton.addEventListener("click", function () {
-    addXmlElement(element);
-  });
-
-  const deleteButton = document.createElement("button");
-  deleteButton.textContent = "Delete Element";
-  deleteButton.addEventListener("click", function () {
-    deleteXmlElement(element);
   });
 
   elementPreview.appendChild(xmlName);
@@ -151,9 +135,6 @@ function createPreviewElements(container, element) {
     elementPreview.appendChild(text4XMLelement);
     elementPreview.appendChild(document.createElement("br"));
   }
-
-  elementPreview.appendChild(addButton);
-  elementPreview.appendChild(deleteButton);
 
   container.appendChild(elementPreview);
 
