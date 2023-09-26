@@ -1,5 +1,5 @@
-// Function to load an XML file
-function loadXml() {
+// Function to load and format XML file
+function loadAndFormatXml() {
   const xmlFileInput = document.getElementById("xmlFileInput");
   const xmlEditor = document.getElementById("xmlEditor");
 
@@ -8,11 +8,57 @@ function loadXml() {
   rowNum = 1;
 
   reader.onload = function (event) {
-    xmlEditor.value = event.target.result;
+    const unformattedXml = event.target.result;
+
+    // Format XML
+    const formattedXml = formatXml(unformattedXml);
+
+    // Set the formatted XML in the editor
+    xmlEditor.value = formattedXml;
+
+    // Preview the formatted XML
     previewXml();
   };
 
   reader.readAsText(file);
+}
+
+// Function to format XML
+function formatXml(text) {
+  let shift = 0; // num of shifts
+  let ar = text
+    .replace(/>\s{0,}</g, "><")
+    .replace(/</g, "~::~<")
+    .replace(/xmlns\:/g, "~::~xmlns:")
+    .replace(/xmlns\=/g, "~::~xmlns=")
+    .split("~::~");
+  console.log(ar);
+  let str = '<?xml version="1.0" encoding="UTF-8"?>\n';
+  let closeFlag = false;
+  for (let i = 0; i < ar.length; i++) {
+    console.log(shift);
+    if (ar[i]) {
+      if (ar[i][0] + ar[i][1] == "<?") {
+      } else if (ar[i][0] + ar[i][1] == "</") {
+        shift--;
+        if (closeFlag) {
+        } else {
+          str += "\t".repeat(shift);
+        }
+        str += ar[i] + "\n";
+        closeFlag = false;
+      } else if (ar[i][0] == "<") {
+        if (closeFlag) {
+          str += "\n";
+        }
+        str += "\t".repeat(shift) + ar[i];
+        shift++;
+        closeFlag = true;
+      }
+    }
+  }
+
+  return str[0] == "\n" ? str.slice(1) : str;
 }
 
 // Function to save an XML file
@@ -144,8 +190,12 @@ function createPreviewElements(container, element) {
   }
 }
 
+// Add a change event listener to the file input
+document
+  .getElementById("xmlFileInput")
+  .addEventListener("change", loadAndFormatXml);
+
 // Event listeners
-document.getElementById("xmlFileInput").addEventListener("change", loadXml);
 document.getElementById("xmlEditor").addEventListener("input", previewXml);
 document.getElementById("saveButton").addEventListener("click", saveXml);
 
