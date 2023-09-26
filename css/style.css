@@ -8,6 +8,10 @@
   color: rgba(0, 0, 0, 0.5);
 }
 
+.important {
+  color: red;
+}
+
 .xml-label {
   -webkit-touch-callout: none; /* iOS Safari */
   -webkit-user-select: none; /* Safari */

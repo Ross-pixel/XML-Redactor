@@ -69,16 +69,20 @@ function saveXml() {
 
   // Get the content of the editor and save it as an XML file
   const xmlData = xmlEditor.value;
-  const blob = new Blob([xmlData], { type: "text/xml" });
-  const url = window.URL.createObjectURL(blob);
+  if (xmlData.includes("Insert your value")) {
+    alert("Fill all fields!");
+  } else {
+    const blob = new Blob([xmlData], { type: "text/xml" });
+    const url = window.URL.createObjectURL(blob);
 
-  const a = document.createElement("a");
-  a.href = url;
-  a.download = "edited-website.xml";
-  document.body.appendChild(a);
-  a.click();
-  window.URL.revokeObjectURL(url);
-  document.body.removeChild(a);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = "edited-website.xml";
+    document.body.appendChild(a);
+    a.click();
+    window.URL.revokeObjectURL(url);
+    document.body.removeChild(a);
+  }
 }
 
 let rowNum = 1;
@@ -104,6 +108,12 @@ function previewXml() {
       textareaElement.addEventListener("input", function () {
         // Get the value of the <textarea> element
         const textareaValue = textareaElement.value;
+
+        if (textareaValue == "Insert your value") {
+          textareaElement.classList.add("important");
+        } else if (textareaElement.classList.contains("important")) {
+          textareaElement.classList.remove("important");
+        }
 
         // Get the 'data-row' attribute
         let row = textareaElement.dataset.row;
@@ -181,6 +191,9 @@ function createPreviewElements(container, element) {
     text4XMLelement.dataset.row = rowNum;
     rowNum++;
     text4XMLelement.value = element.innerHTML;
+    if (text4XMLelement.value == "Insert your value") {
+      text4XMLelement.classList.add("important");
+    }
     elementPreview.appendChild(text4XMLelement);
     elementPreview.appendChild(document.createElement("br"));
   }
