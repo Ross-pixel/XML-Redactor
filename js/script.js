@@ -25,23 +25,25 @@ function loadAndFormatXml() {
 
 // Function to format XML
 function formatXml(text) {
-  let shift = 0; // num of shifts
+  let shift = 0; // num of tabs
   let ar = text
     .replace(/>\s{0,}</g, "><")
     .replace(/</g, "~::~<")
     .replace(/xmlns\:/g, "~::~xmlns:")
     .replace(/xmlns\=/g, "~::~xmlns=")
-    .split("~::~");
-  console.log(ar);
+    .split("~::~"); // get list of all xml tags
   let str = '<?xml version="1.0" encoding="UTF-8"?>\n';
-  let closeFlag = false;
+  console.log(ar);
+  let closeFlag = false; // flag for checking open XML tags
   for (let i = 0; i < ar.length; i++) {
-    console.log(shift);
     if (ar[i]) {
       if (ar[i][0] + ar[i][1] == "<?") {
       } else if (ar[i][0] + ar[i][1] == "</") {
         shift--;
         if (closeFlag) {
+          if (str.slice(-1) == ">") {
+            str += "Insert your value";
+          }
         } else {
           str += "\t".repeat(shift);
         }
