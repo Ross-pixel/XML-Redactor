@@ -69,6 +69,8 @@ function saveXml() {
 
   // Get the content of the editor and save it as an XML file
   const xmlData = xmlEditor.value;
+
+  // Check that all fields are filled
   if (xmlData.includes("Insert your value")) {
     alert("Fill all fields!");
   } else {
@@ -109,6 +111,7 @@ function previewXml() {
         // Get the value of the <textarea> element
         const textareaValue = textareaElement.value;
 
+        // Add red color for empty fields
         if (textareaValue == "Insert your value") {
           textareaElement.classList.add("important");
         } else if (textareaElement.classList.contains("important")) {
@@ -191,9 +194,6 @@ function createPreviewElements(container, element) {
     text4XMLelement.dataset.row = rowNum;
     rowNum++;
     text4XMLelement.value = element.innerHTML;
-    if (text4XMLelement.value == "Insert your value") {
-      text4XMLelement.classList.add("important");
-    }
     elementPreview.appendChild(text4XMLelement);
     elementPreview.appendChild(document.createElement("br"));
   }
