@@ -146,6 +146,23 @@ function previewXml() {
         // Update xmlEditor with the modified lines
         xmlEditor.value = xmlEditorLines.join("\n");
       });
+
+      // auto clear for empty fields
+      textareaElement.addEventListener("focus", function () {
+        const textareaValue = textareaElement.value;
+        if (textareaValue == "Insert your value") {
+          textareaElement.value = "";
+          textareaElement.classList.remove("important");
+        }
+      });
+      // auto fill warning for empty fields
+      textareaElement.addEventListener("focusout", function () {
+        const textareaValue = textareaElement.value;
+        if (textareaValue == "") {
+          textareaElement.value = "Insert your value";
+          textareaElement.classList.add("important");
+        }
+      });
     });
 
     // Update the content of <textarea>
@@ -194,6 +211,9 @@ function createPreviewElements(container, element) {
     text4XMLelement.dataset.row = rowNum;
     rowNum++;
     text4XMLelement.value = element.innerHTML;
+    if (text4XMLelement.value == "Insert your value") {
+      text4XMLelement.classList.add("important");
+    }
     elementPreview.appendChild(text4XMLelement);
     elementPreview.appendChild(document.createElement("br"));
   }
