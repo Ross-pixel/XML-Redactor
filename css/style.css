@@ -3,6 +3,10 @@ body {
     Tahoma, sans-serif;
 }
 
+textarea {
+  font-family: "Courier New", Courier, monospace;
+}
+
 .xml-element {
   margin: 10px;
   margin-left: 20px;
