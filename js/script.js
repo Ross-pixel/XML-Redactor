@@ -233,8 +233,3 @@ document
 // Event listeners
 document.getElementById("xmlEditor").addEventListener("input", previewXml);
 document.getElementById("saveButton").addEventListener("click", saveXml);
-
-// Call the previewXml() function when the page loads
-window.onload = function () {
-  previewXml();
-};
