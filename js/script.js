@@ -32,7 +32,7 @@ function formatXml(text) {
     .replace(/xmlns\:/g, "~::~xmlns:")
     .replace(/xmlns\=/g, "~::~xmlns=")
     .split("~::~"); // get list of all xml tags
-  let str = '<?xml version="1.0" encoding="UTF-8"?>\n';
+  let str = '<?xml version="1.0" encoding="UTF-8"?>' + "\n";
   console.log(ar);
   let closeFlag = false; // flag for checking open XML tags
   for (let i = 0; i < ar.length; i++) {
@@ -131,7 +131,7 @@ function previewXml() {
 
         for (i = 0; i < xmlEditorLines.length; i++) {
           if (
-            (xmlEditorLines[i].match(/\</g) || []).length === 2 &&
+            (xmlEditorLines[i].match("</") || []).length === 1 &&
             (xmlEditorLines[i].match(/\>/g) || []).length === 2
           ) {
             rowCounter++;
@@ -139,7 +139,9 @@ function previewXml() {
           if (row == rowCounter) {
             opentag = xmlEditorLines[i].split(">")[0];
             closetag = xmlEditorLines[i].split("<")[2];
-            xmlEditorLines[i] = `${opentag}>${textareaValue}<${closetag}`;
+            if (closetag) {
+              xmlEditorLines[i] = `${opentag}>${textareaValue}<${closetag}`;
+            }
           }
         }
 
