@@ -105,50 +105,8 @@ function previewXml() {
     // Get all <textarea> elements inside Preview
     const textareaElements = preview.querySelectorAll("textarea");
 
-    // Add an 'input' event listener to each <textarea> element
+    // Add an event listeners to each <textarea> element
     textareaElements.forEach((textareaElement) => {
-      textareaElement.addEventListener("input", function () {
-        // Get the value of the <textarea> element
-        const textareaValue = textareaElement.value;
-
-        // Add red color for empty fields
-        if (textareaValue == "Insert your value") {
-          textareaElement.classList.add("important");
-        } else if (textareaElement.classList.contains("important")) {
-          textareaElement.classList.remove("important");
-        }
-
-        // Get the 'data-row' attribute
-        let row = textareaElement.dataset.row;
-
-        // Get the current value of xmlEditor
-        const xmlEditorValue = xmlEditor.value;
-
-        // Split xmlEditor into lines
-        let xmlEditorLines = xmlEditorValue.split("\n");
-
-        let rowCounter = 0;
-
-        for (i = 0; i < xmlEditorLines.length; i++) {
-          if (
-            (xmlEditorLines[i].match("</") || []).length === 1 &&
-            (xmlEditorLines[i].match(/\>/g) || []).length === 2
-          ) {
-            rowCounter++;
-          }
-          if (row == rowCounter) {
-            opentag = xmlEditorLines[i].split(">")[0];
-            closetag = xmlEditorLines[i].split("<")[2];
-            if (closetag) {
-              xmlEditorLines[i] = `${opentag}>${textareaValue}<${closetag}`;
-            }
-          }
-        }
-
-        // Update xmlEditor with the modified lines
-        xmlEditor.value = xmlEditorLines.join("\n");
-      });
-
       // auto clear for empty fields
       textareaElement.addEventListener("focus", function () {
         const textareaValue = textareaElement.value;
@@ -231,7 +189,3 @@ function createPreviewElements(container, element) {
 document
   .getElementById("xmlFileInput")
   .addEventListener("change", loadAndFormatXml);
-
-// Event listeners
-document.getElementById("xmlEditor").addEventListener("input", previewXml);
-document.getElementById("saveButton").addEventListener("click", saveXml);
