@@ -33,7 +33,6 @@ function formatXml(text) {
     .replace(/xmlns\=/g, "~::~xmlns=")
     .split("~::~"); // get list of all xml tags
   let str = '<?xml version="1.0" encoding="UTF-8"?>' + "\n";
-  console.log(ar);
   let closeFlag = false; // flag for checking open XML tags
   for (let i = 0; i < ar.length; i++) {
     if (ar[i]) {
@@ -72,12 +71,10 @@ function prepareXml() {
   );
   const parser = new DOMParser();
   let xmlDoc = parser.parseFromString(xmlEditor.value, "text/xml");
-  console.log(xmlDoc.childNodes[0].children[0].children[0]);
   xmlDoc.childNodes[0] = reqursiveSaveInformation(
     xmlDoc.childNodes[0],
     filteredXmlElements
   );
-  console.log(xmlDoc);
   xmlEditor.value = new XMLSerializer().serializeToString(xmlDoc);
 }
 
