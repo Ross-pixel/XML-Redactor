@@ -7,14 +7,14 @@ function loadAndFormatXml() {
   const reader = new FileReader();
   rowNum = 1;
   if (file) {
-    const allowedExtensions = [".xml"]; // Здесь вы можете указать разрешенные расширения
+    const allowedExtensions = [".xml"]; // You can specify allowed extensions here
     const fileName = file.name;
     const fileExtension = fileName.slice(
       ((fileName.lastIndexOf(".") - 1) >>> 0) + 2
     );
 
     if (allowedExtensions.includes("." + fileExtension.toLowerCase())) {
-      // Расширение файла допустимо, продолжайте обработку
+      // The file extension is allowed, continue processing
       reader.onload = function (event) {
         const unformattedXml = event.target.result;
 
@@ -30,12 +30,13 @@ function loadAndFormatXml() {
 
       reader.readAsText(file);
     } else {
-      // Расширение файла не допустимо, выведите сообщение об ошибке
+      // The file extension is not allowed, display an error message
       alert(
-        "Недопустимое расширение файла. Разрешены только файлы с расширениями: " +
-          allowedExtensions.join(", ")
+        "Invalid file extension. Only files with extensions: " +
+          allowedExtensions.join(", ") +
+          " are allowed."
       );
-      // Сбросить значение input, чтобы пользователь мог выбрать другой файл
+      // Reset the input value so the user can select another file
       xmlFileInput.value = "";
     }
   }
@@ -79,31 +80,32 @@ function formatXml(text) {
 
   return str[0] == "\n" ? str.slice(1) : str;
 }
-// Function for prepare all data for saving
+
+// Function for preparing all data for saving
 function prepareXml() {
   const xmlEditor = document.getElementById("xmlEditor");
   const preview = document.getElementById("preview");
   const allXmlElements = preview.querySelectorAll(".xml-element");
-  const filteredXmlElements = Array.from(allXmlElements).filter(
-    (XmlElelement) => XmlElelement.children[2].classList.contains("xml-input")
+  const filteredXmlElements = Array.from(allXmlElements).filter((xmlElement) =>
+    xmlElement.children[2].classList.contains("xml-input")
   );
   const parser = new DOMParser();
   let xmlDoc = parser.parseFromString(xmlEditor.value, "text/xml");
-  xmlDoc.childNodes[0] = reqursiveSaveInformation(
+  xmlDoc.childNodes[0] = recursiveSaveInformation(
     xmlDoc.childNodes[0],
     filteredXmlElements
   );
   xmlEditor.value = new XMLSerializer().serializeToString(xmlDoc);
 }
 
-function reqursiveSaveInformation(xmlParent, xmlElements) {
+function recursiveSaveInformation(xmlParent, xmlElements) {
   if (xmlParent.children.length === 0) {
     const xmlValue = xmlElements.shift().children[2].value;
     xmlParent.innerHTML = xmlValue;
     return xmlParent;
   } else {
     for (let i = 0; i < xmlParent.children.length; i++) {
-      xmlParent.children[i] = reqursiveSaveInformation(
+      xmlParent.children[i] = recursiveSaveInformation(
         xmlParent.children[i],
         xmlElements
       );
@@ -154,9 +156,9 @@ function previewXml() {
     // Get all <textarea> elements inside Preview
     const textareaElements = preview.querySelectorAll("textarea");
 
-    // Add an event listeners to each <textarea> element
+    // Add event listeners to each <textarea> element
     textareaElements.forEach((textareaElement) => {
-      // auto clear for empty fields
+      // Auto-clear for empty fields
       textareaElement.addEventListener("focus", function () {
         const textareaValue = textareaElement.value;
         if (textareaValue == "Insert your value") {
@@ -164,7 +166,7 @@ function previewXml() {
           textareaElement.classList.remove("important");
         }
       });
-      // auto fill warning for empty fields
+      // Auto-fill warning for empty fields
       textareaElement.addEventListener("focusout", function () {
         const textareaValue = textareaElement.value;
         if (textareaValue == "") {
