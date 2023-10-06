@@ -62,9 +62,43 @@ function formatXml(text) {
 
   return str[0] == "\n" ? str.slice(1) : str;
 }
+// Function for prepare all data for saving
+function prepareXml() {
+  const xmlEditor = document.getElementById("xmlEditor");
+  const preview = document.getElementById("preview");
+  const allXmlElements = preview.querySelectorAll(".xml-element");
+  const filteredXmlElements = Array.from(allXmlElements).filter(
+    (XmlElelement) => XmlElelement.children[2].classList.contains("xml-input")
+  );
+  const parser = new DOMParser();
+  let xmlDoc = parser.parseFromString(xmlEditor.value, "text/xml");
+  console.log(xmlDoc.childNodes[0].children[0].children[0]);
+  xmlDoc.childNodes[0] = reqursiveSaveInformation(
+    xmlDoc.childNodes[0],
+    filteredXmlElements
+  );
+  console.log(xmlDoc);
+  xmlEditor.value = new XMLSerializer().serializeToString(xmlDoc);
+}
+
+function reqursiveSaveInformation(xmlParent, xmlElements) {
+  if (xmlParent.children.length === 0) {
+    const xmlValue = xmlElements.shift().children[2].value;
+    xmlParent.innerHTML = xmlValue;
+    return xmlParent;
+  } else {
+    for (let i = 0; i < xmlParent.children.length; i++) {
+      xmlParent.children[i] = reqursiveSaveInformation(
+        xmlParent.children[i],
+        xmlElements
+      );
+    }
+  }
+}
 
 // Function to save an XML file
 function saveXml() {
+  prepareXml();
   const xmlEditor = document.getElementById("xmlEditor");
 
   // Get the content of the editor and save it as an XML file
