@@ -6,21 +6,39 @@ function loadAndFormatXml() {
   const file = xmlFileInput.files[0];
   const reader = new FileReader();
   rowNum = 1;
+  if (file) {
+    const allowedExtensions = [".xml"]; // Здесь вы можете указать разрешенные расширения
+    const fileName = file.name;
+    const fileExtension = fileName.slice(
+      ((fileName.lastIndexOf(".") - 1) >>> 0) + 2
+    );
 
-  reader.onload = function (event) {
-    const unformattedXml = event.target.result;
+    if (allowedExtensions.includes("." + fileExtension.toLowerCase())) {
+      // Расширение файла допустимо, продолжайте обработку
+      reader.onload = function (event) {
+        const unformattedXml = event.target.result;
 
-    // Format XML
-    const formattedXml = formatXml(unformattedXml);
+        // Format XML
+        const formattedXml = formatXml(unformattedXml);
 
-    // Set the formatted XML in the editor
-    xmlEditor.value = formattedXml;
+        // Set the formatted XML in the editor
+        xmlEditor.value = formattedXml;
 
-    // Preview the formatted XML
-    previewXml();
-  };
+        // Preview the formatted XML
+        previewXml();
+      };
 
-  reader.readAsText(file);
+      reader.readAsText(file);
+    } else {
+      // Расширение файла не допустимо, выведите сообщение об ошибке
+      alert(
+        "Недопустимое расширение файла. Разрешены только файлы с расширениями: " +
+          allowedExtensions.join(", ")
+      );
+      // Сбросить значение input, чтобы пользователь мог выбрать другой файл
+      xmlFileInput.value = "";
+    }
+  }
 }
 
 // Function to format XML
