@@ -55,6 +55,7 @@ button:focus {
 
 main {
   margin: 8px;
+  margin-bottom: 40px;
 }
 
 textarea {
