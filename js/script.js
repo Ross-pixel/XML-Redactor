@@ -119,18 +119,34 @@ function saveXml() {
   const xmlEditor = document.getElementById("xmlEditor");
 
   // Get the content of the editor and save it as an XML file
-  const xmlData = xmlEditor.value;
+  let xmlData = xmlEditor.value;
 
   // Check that all fields are filled
   if (xmlData.includes("Insert your value")) {
-    alert("Fill all fields!");
+    if (confirm("There are emty fields, continue?") == true) {
+      while (xmlData.includes("Insert your value")) {
+        xmlData = xmlData.replace("Insert your value", "");
+      }
+      const blob = new Blob([xmlData], { type: "text/xml" });
+      const url = window.URL.createObjectURL(blob);
+      const a = document.createElement("a");
+
+      a.href = url;
+      let name = prompt("Enter the file name", "edited-website") + ".xml";
+      a.download = name;
+      document.body.appendChild(a);
+      a.click();
+      window.URL.revokeObjectURL(url);
+      document.body.removeChild(a);
+    }
   } else {
     const blob = new Blob([xmlData], { type: "text/xml" });
     const url = window.URL.createObjectURL(blob);
-
     const a = document.createElement("a");
+
     a.href = url;
-    a.download = "edited-website.xml";
+    let name = prompt("Enter the file name", "edited-website") + ".xml";
+    a.download = name;
     document.body.appendChild(a);
     a.click();
     window.URL.revokeObjectURL(url);
