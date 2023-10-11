@@ -1,10 +1,65 @@
+@font-face {
+  font-family: "GeoSlub";
+  src: url(fonts/geometric\ slabserif\ 703\ medium\ bt.ttf);
+}
 body {
-  font-family: Trebuchet MS, Lucida Grande, Lucida Sans Unicode, Lucida Sans,
-    Tahoma, sans-serif;
+  font-family: "GeoSlub", sans-serif;
+  color: #ffedf1;
+  display: flex;
+  flex-direction: column;
+  background-color: #242582;
+  margin: 0px;
+}
+
+button,
+input[type="file"]::file-selector-button {
+  font-family: "GeoSlub", sans-serif;
+  font-weight: lighter;
+  height: 30px;
+  width: 90px;
+  border-color: #ffedf1;
+  border-style: solid;
+  border-radius: 2px;
+  color: #ffedf1;
+  background-color: #1c1d61;
+}
+
+input[type="file"]::file-selector-button:hover,
+input[type="file"]::file-selector-button:focus,
+button:hover,
+button:focus {
+  height: 30px;
+  width: 90px;
+  border-color: #deccd0;
+  border-style: solid;
+  border-radius: 2px;
+  color: #deccd0;
+  background-color: #1a1b59;
+}
+
+.header-name {
+  font-size: 20px;
+  color: #f64c72;
+  margin: 8px;
+}
+
+.header-name a {
+  font-weight: 100;
+  color: #f64c72;
+  text-decoration-line: none;
+}
+
+.header-name a:hover {
+  color: #d44161;
+}
+
+main {
+  margin: 8px;
 }
 
 textarea {
-  font-family: "Courier New", Courier, monospace;
+  font-family: "GeoSlub", sans-serif;
+  font-size: larger;
 }
 
 .xml-element {
@@ -29,4 +84,22 @@ textarea {
   -ms-user-select: none; /* Internet Explorer/Edge */
   user-select: none; /* Non-prefixed version, currently
                                   supported by Chrome, Edge, Opera and Firefox */
+}
+
+footer {
+  padding-bottom: 10px;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  height: 30px;
+  background-color: #fff8f9f3;
+  color: #242582;
+}
+
+.colors {
+  color: #242582;
+  color: #553d67;
+  color: #f64c72;
+  color: #99738e;
+  color: #2f2fa2;
 }
