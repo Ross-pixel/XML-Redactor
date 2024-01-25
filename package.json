@@ -1,0 +1,22 @@
+{
+  "name": "xml-redactor",
+  "version": "1.0.0",
+  "description": "To try redactor, visit: https://ross-pixel.github.io/XML-Redactor/",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Ross-pixel/XML-Redactor.git"
+  },
+  "author": "Ross-pixel",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Ross-pixel/XML-Redactor/issues"
+  },
+  "homepage": "https://github.com/Ross-pixel/XML-Redactor#readme",
+  "dependencies": {
+    "axios": "^1.6.0"
+  }
+}
